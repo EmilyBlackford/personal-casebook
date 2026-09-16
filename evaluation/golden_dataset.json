@@ -1,0 +1,102 @@
+[
+    {
+    "question": "What is the maximum rate of echolocation pulses produced by bats during the terminal buzz?",
+    "ground_truth": "During the terminal buzz some bats can produce echolocation clicks at rates of up to 200 clicks per second.",
+    "source_docs": ["bat-echolocation.txt"]
+    },
+    {
+    "question": "What is the typical human hearing range?",
+    "ground_truth": "The typical human hearing range is approximately 20 Hz to 20,000 Hz.",
+    "source_docs": ["bat-echolocation.txt"]
+    },
+    {
+    "question": "How do honey bees encode the distance to a food source?",
+    "ground_truth": "Honey bees encode distance to a food source through the duration of the waggle run in the waggle dance. A longer waggle run indicates a more distant food source.",
+    "source_docs": ["bee-communication.txt"]
+    },
+    {
+    "question": "Who was one of the first people to translate the meaning of the honey bee waggle dance?",
+    "ground_truth": "Karl von Frisch was one of the first people to translate the meaning of the honey bee waggle dance. He was an Austrian ethologist and Nobel laureate.",
+    "source_docs": ["bee-communication.txt"]
+    },
+    {
+    "question": "What percentage of a coral's energy needs can zooxanthellae provide through photosynthesis?",
+    "ground_truth": "Zooxanthellae can provide up to 90 percent of a coral's energy needs through photosynthesis.",
+    "source_docs": ["coral-reefs.txt"]
+    },
+    {
+    "question": "What temperature can water emerging from hydrothermal vents reach?",
+    "ground_truth": "Water emerging from hydrothermal vents can range from about 60°C to as high as 464°C.",
+    "source_docs": ["deep-sea-vents.txt"]
+    },
+    {
+    "question": "What are the two main types of frequency structure found in echolocation calls?",
+    "ground_truth": "Echolocation calls can contain frequency-modulated (FM) sweeps and constant-frequency (CF) tones.",
+    "source_docs": ["bat-echolocation.txt"]
+    },
+    {
+    "question": "At approximately what depth are black smokers typically found?",
+    "ground_truth": "Black smokers are typically found at depths of approximately 2,500 to 3,000 metres, in the bathyal zone.",
+    "source_docs": ["deep-sea-vents.txt"]
+    },
+    {
+    "question": "How does a bat determine the distance to an object, and how does a honey bee communicate the distance to a food source?",
+    "ground_truth": "A bat can determine the distance to an object from the time delay between emitting a sound and receiving its returning echo. A honey bee communicates the distance to a food source through the duration of its waggle run, with longer waggle runs indicating greater distances.",
+    "source_docs": ["bat-echolocation.txt", "bee-communication.txt"]
+    },
+    {
+    "question": "How do bats obtain information about objects in darkness, and what energy source supports hydrothermal vent communities in the absence of sunlight?",
+    "ground_truth": "Bats obtain information about objects by producing sounds and detecting the returning echoes. Hydrothermal vent communities are supported by chemical energy rather than sunlight, with chemosynthetic organisms using chemicals from the vent fluids as an energy source.",
+    "source_docs": ["bat-echolocation.txt", "deep-sea-vents.txt"]
+    },
+    {
+    "question": "How do coral reefs and hydrothermal vents each support diverse communities of marine organisms?",
+    "ground_truth": "Coral reefs provide habitat for diverse marine organisms and are supported by the symbiotic relationship between corals and photosynthetic zooxanthellae. Hydrothermal vent communities are supported by chemosynthetic bacteria, which use chemical energy and form the base of the food web.",
+    "source_docs": ["coral-reefs.txt", "deep-sea-vents.txt"]
+    },
+    {
+    "question": "How do bats and honey bees respond to competition or interference from other individuals?",
+    "ground_truth": "Bats can alter their echolocation calls, including stopping calls or shifting frequencies, to reduce interference or jamming from other bats. Honey bees can interfere with competing waggle dances or fight other bees when competing for recruits to a food source.",
+    "source_docs": ["bat-echolocation.txt", "bee-communication.txt"]
+    },
+    {
+    "question": "What do coral bleaching and hydrothermal vent ecosystems reveal about the different ways marine ecosystems can obtain or lose their sources of energy?",
+    "ground_truth": "Coral bleaching can cause corals to lose their symbiotic zooxanthellae, reducing their energy supply and potentially causing starvation and death. Hydrothermal vent ecosystems obtain energy from chemicals rather than sunlight, with chemosynthetic bacteria serving as primary producers.",
+    "source_docs": ["coral-reefs.txt", "deep-sea-vents.txt"]
+    },
+    {
+    "question": "What is the average lifespan of a wild honey bee worker?",
+    "ground_truth": "The corpus does not contain information about the average lifespan of a wild honey bee worker.",
+    "source_docs": ["bee-communication.txt"]
+    },
+    {
+    "question": "Which country has the largest number of hydrothermal vent sites?",
+    "ground_truth": "The corpus does not contain information about which country has the largest number of hydrothermal vent sites.",
+    "source_docs": ["deep-sea-vents.txt"]
+    },
+    {
+    "question": "What percentage of global coral reefs are expected to disappear by 2050?",
+    "ground_truth": "The corpus does not contain information about the percentage of global coral reefs expected to disappear by 2050.",
+    "source_docs": ["coral-reefs.txt"]
+    },
+    {
+    "question": "What is the average wing length of an echolocating bat?",
+    "ground_truth": "The corpus does not contain information about the average wing length of an echolocating bat.",
+    "source_docs": ["bat-echolocation.txt"]
+    },
+    {
+    "question": "How can bats tell whether something is moving rather than simply detecting where it is?",
+    "ground_truth": "Bats can detect target velocity using Doppler shifts in the frequency of returning echoes. In particular, the constant-frequency component of some echolocation calls allows bats to detect changes in frequency caused by relative movement between the bat and its target.",
+    "source_docs": ["bat-echolocation.txt"]
+    },
+    {
+    "question": "If a honey bee performs a waggle run upward on a vertical comb, where is the advertised food relative to the sun?",
+    "ground_truth": "An upward waggle run on a vertical comb indicates that the food source is directly in line with the sun.",
+    "source_docs": ["bee-communication.txt"]
+    },
+    {
+    "question": "Why might a coral reef be unable to rebuild itself after a prolonged bleaching event?",
+    "ground_truth": "Prolonged bleaching can cause corals to starve and die. Their calcium carbonate skeletons may then become overgrown by algae, preventing coral regrowth, and the reef structure can eventually erode and collapse.",
+    "source_docs": ["coral-reefs.txt"]
+    }
+]
