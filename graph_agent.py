@@ -27,10 +27,11 @@ vector_store = load_vector_store()
 @tool
 def retrieve(query: str) -> str:
     """
-    Search the internal document corpus for passages relevant to a query.
-    The corpus covers bat echolocation, bee communication, deep-sea hydrothermal vents,
-    and coral reef ecology. Use this for questions answerable from those documents.
-    Returns text passages with source document names.
+        Search a corpus of four AI governance documents: the EU AI Act, the
+        International AI Safety Act, the NIST AI Risk Management Framework, 
+        and the Meridian AI Governance report. Use this for any question about 
+        AI Regulation, policy, standards, or governance.
+        Returns a list of text passages with source document names.
     """
     # Call the pipeline function from pipeline.py
     passages = pipeline_retrieve(query, vector_store)

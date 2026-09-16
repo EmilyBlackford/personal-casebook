@@ -1,26 +1,43 @@
 # Casebook
 
-<!--
-Start with what the project is and the constraint that shapes it. The
-constraint matters most here: a tool that does not know about the citation
-rule will happily generate code that answers from the model's training data,
-and it will look fine until you test it.
--->
-
 Casebook is a document Q&A system for a consulting firm's internal knowledge
-base. A user asks a question in plain English and receives an answer grounded in the firm's documents, with a citation to the source.
+base. A user asks a question in plain English and receives an answer grounded
+in the firm's documents, with a citation to the source.
 
-The central constraint: answers come from retrieved passages only. If the
-information is not in the corpus, Casebook says so. Never generate code or
-prompts that weaken this constraint.
+Casebook is a tool-using agent, not a single source look-up. It has access to:
+- `retrieve`: search over the firm's internal document corpus (local tool)
+- `web_search`: search the live web for current information outside the corpus, provided exclusively by an MCP server
+
+The central constraint: every answer must be grounded in a passage actually returned by `retrieve` or `web_search`, with a citation to its source. Casebook never answers from unstates/parametric knowledge, and never blends an ungrounded claim in with a cited one. If neither tool returns the information, Casebook says so plainly rather than filling the gap.
+
+Tool selection must be driven by clear, non-overlapping tool descriptions,
+not by hard-coded keyword rules. When adding, editing, or connecting a new
+tool, always:
+- Write or review its description so the model can tell when to use it
+  versus the other tools
+- Preserve the shared result shape (`content`, `source`, `title` or
+  equivalent) so downstream code and citation logic don't need to know which
+  tool produced a given passage, or whether it was local or MCP-connected
+- Never write logic that lets a tool bypass the citation requirement above
+- Never write code that connects to `web_search` any way other than through
+  the MCP client session
+
+Never generate code or prompts that weaken any of these constraints.
 
 ## Stack
+
+<!--
+List what you have actually chosen, so the tool does not suggest plausible
+alternatives you are not using. Update it when the stack grows.
+-->
 
 - Python, LangChain (LangGraph from Week 10)
 - Gemini 2.5 Flash via Vertex AI; Pro only where we say so
 - Vertex AI text-embedding-004 for embeddings
 - pgvector on Cloud SQL for vector storage
 - RAGAS for evaluation, Langfuse for tracing
+- `mcp` and `langchain_mcp_adapters` for MCP client connections
+- Tavily for web search (accessed only via the `web_search` MCR server, never called directly)
 
 ## Key conventions
 
@@ -30,10 +47,9 @@ future week) depends on a signature, it belongs here.
 -->
 
 - `retrieve(query: str, vector_store, k: int = 4)` returns
-  `[{"content": str, "source": str, "score": float}]`. This signature is a
-  contract. Do not change it.
-- Every answer-generation prompt instructs the model to cite sources and to
-  say when the corpus does not contain the answer.
+  `[{"content": str, "source": str, "title": str}]`. This signature is a contract. Do not change it.
+- `web_search` (MCP tool, not a local function) return results in the same shape: `{"content": str, "source": str, "title": str}`. Any tool added to Casebook must conform to this shape so downstream code and citation logic don't need to know which tool produced a given passage.
+- Every answer-generation prompt instructs the model to cite sources and to say when neither `retrieve` nor `web_search` contains the answer.
 - Connection strings use the `postgresql+psycopg://` prefix.
 
 ## Grill me before you build
