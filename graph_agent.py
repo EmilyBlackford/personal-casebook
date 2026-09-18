@@ -183,7 +183,7 @@ def ask_agent(question: str) -> dict:
 
 
 if __name__ == "__main__":
-    result = ask_agent("How do bats locate prey, and what frequencies do they typically use?")
+    result = ask_agent("What are the main risks of AI use, and how is it regulated?")
     print(result["answer"])
     print("\nTool calls:")
     for tc in result["tool_calls"]:

@@ -24,10 +24,17 @@ from ragas.metrics import faithfulness, answer_relevancy, context_precision, con
 
 from pipeline import ask, load_vector_store
 from evaluation.ragas_config import get_ragas_llm, get_ragas_embeddings
+from graph_agent import ask_agent, extract_contexts_from_messages
 
 DATASET_PATH = Path("evaluation/golden_dataset.json")
 OUTPUT_PATH  = Path("evaluation/pipeline_outputs.json")
 
+def run_with_agent(sample):
+    result = ask_agent(sample["question"])
+    return {
+        "answer": result["answer"],
+        "contexts": extract_contexts_from_messages(result["messages"])
+    }
 
 def collect_outputs(vector_store) -> list[dict]:
     """Run every question in the golden dataset through the pipeline.
@@ -52,13 +59,21 @@ def collect_outputs(vector_store) -> list[dict]:
         question = item["question"]
         print(f"[{i}/{total}] Asking: {question}")
 
-        result = ask(question, vector_store)
+        # result = ask(question, vector_store)
+
+        # outputs.append({
+        #     "question": question,
+        #     "ground_truth": item["ground_truth"],
+        #     "answer": result["answer"],
+        #     "contexts": result["contexts"],
+        # })
+        agent_result = run_with_agent(item)
 
         outputs.append({
             "question": question,
             "ground_truth": item["ground_truth"],
-            "answer": result["answer"],
-            "contexts": result["contexts"],
+            "answer": agent_result["answer"],
+            "contexts": agent_result["contexts"]
         })
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
