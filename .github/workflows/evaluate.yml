@@ -56,6 +56,8 @@ jobs:
   full-evaluation:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
+    # ...same steps as quality-gate, but "Run Full Evaluation" points
+    # --dataset at evaluation/golden_dataset.json instead of the Smoke Set.
 
     steps:
       - uses: actions/checkout@v4
@@ -98,3 +100,4 @@ jobs:
         with:
           name: quality-gate-results
           path: evaluation_results.json
+          
