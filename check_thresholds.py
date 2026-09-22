@@ -12,15 +12,22 @@ import argparse
 import json
 import sys
 
+# python evaluate.py --ci --dataset evaluation/golden_dataset.json
+# cat evaluation_results.json
+# {
+#   "faithfulness": 0.9022601794340926,
+#   "answer_relevancy": 0.8928252692698979,
+#   "context_precision": 0.8695652173043475,
+#   "context_recall": 0.7913043478260869
+# }
 # Set your own thresholds here, roughly 15 percentage points below your
 # Week 9 baseline scores. Adjust once you have established your own baseline.
 THRESHOLDS = {
-    "faithfulness": 0.65,
-    "answer_relevancy": 0.65,
-    "context_precision": 0.65,
-    "context_recall": 0.55,
+    "faithfulness": 0.78,
+    "answer_relevancy": 0.63,
+    "context_precision": 0.80,
+    "context_recall": 0.71,
 }
-
 
 def main():
     parser = argparse.ArgumentParser()

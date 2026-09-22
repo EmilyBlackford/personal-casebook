@@ -1,0 +1,13 @@
+| Metric             | Week 9 Pipeline | Week 10 Agent |
+|--------------------|-----------------|---------------|
+| Faithfulness       |           0.9370|         0.8710| 
+| Answer Relevancy   |           0.7834|         0.9443| 
+| Context Precision  |           0.9505|         0.8696| 
+| Context Recall     |           0.8652|         0.7058| 
+
+Copied from shared casebook_eb_kd
+The Week 9 RAGAS pipeline always runs a single, fixed retrieve() call using the raw query, regardless of what the question actually needs. It has no capacity to perform multiple iterations on the same query.
+
+The Week 10 ReAct agent instead decided how to handle the complex bat/bee question and broke it up into three separate self-written sub-queries (seen in the tool_calls list). 
+It then judged, on its own, that it had enough information to stop (shown by ‘Iterations: 2), where iteration 1 was the model choosing to retrieve and iteration 2 was it choosing to answer rather than search again.
+

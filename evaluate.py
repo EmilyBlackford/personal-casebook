@@ -16,7 +16,7 @@
 # context_recall: 0.400
 # Date: 10/09/26
 
-iimport sys
+import sys
 import argparse
 import json
 from pathlib import Path
@@ -43,10 +43,10 @@ def collect_outputs(dataset_path: Path, output_path: Path, vector_store) -> list
 
     Read dataset_path. For each item, call ask() and collect the result.
     Write a list of dicts to output_path. Each dict must have:
-      "question":     str
-      "ground_truth": str  (copied from the dataset)
-      "answer":       str  (from the pipeline)
-      "contexts":     list[str]  (from the pipeline)
+        "question":     str
+        "ground_truth": str  (copied from the dataset)
+        "answer":       str  (from the pipeline)
+        "contexts":     list[str]  (from the pipeline)
 
     Print progress as you go.
     Returns the list of output dicts.
@@ -67,15 +67,6 @@ def collect_outputs(dataset_path: Path, output_path: Path, vector_store) -> list
             "answer": agent_result["answer"],
             "contexts": agent_result["contexts"]
         })
-
-        # result = ask(question, vector_store, use_rewriting=USE_REWRITING)
-        #
-        # outputs.append({
-        #     "question":     question,
-        #     "ground_truth": item["ground_truth"],
-        #     "answer":       result["answer"],
-        #     "contexts":     result["contexts"],
-        # })
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with output_path.open("w", encoding="utf-8") as f:
@@ -124,8 +115,6 @@ def main():
     outputs = collect_outputs(dataset_path, output_path, vector_store)
     result = run_ragas(outputs)
 
-    # In Week 9 your harness produced a RAGAS result object; you convert it with
-    # result.to_pandas() to write the CSV. Take the per-metric means from that DataFrame:
     df = result.to_pandas()
     results = {
         "faithfulness": float(df["faithfulness"].mean()),
