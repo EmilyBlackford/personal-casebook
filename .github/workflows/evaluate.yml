@@ -31,13 +31,13 @@ jobs:
         run: |
           curl -o cloud-sql-proxy https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.14.0/cloud-sql-proxy.linux.amd64
           chmod +x cloud-sql-proxy
-          ./cloud-sql-proxy --port 5432 pa-consulting-ai-eng:europe-west4:casebook-pg &
+          ./cloud-sql-proxy --port 5432 pa-consulting-ai-eng:europe-west2:casebook-pg &
           sleep 5
 
       - name: Run Quality Gate (Smoke Set)
         env:
           GOOGLE_CLOUD_PROJECT: ${{ secrets.GOOGLE_CLOUD_PROJECT }}
-          GOOGLE_CLOUD_LOCATION: europe-west4
+          GOOGLE_CLOUD_LOCATION: europe-west2
           PG_CONNECTION_STRING: ${{ secrets.PG_CONNECTION_STRING }}
           LANGFUSE_PUBLIC_KEY: ${{ secrets.LANGFUSE_PUBLIC_KEY }}
           LANGFUSE_SECRET_KEY: ${{ secrets.LANGFUSE_SECRET_KEY }}
@@ -79,13 +79,13 @@ jobs:
         run: |
           curl -o cloud-sql-proxy https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.14.0/cloud-sql-proxy.linux.amd64
           chmod +x cloud-sql-proxy
-          ./cloud-sql-proxy --port 5432 pa-consulting-ai-eng:europe-west4:casebook-pg &
+          ./cloud-sql-proxy --port 5432 pa-consulting-ai-eng:europe-west2:casebook-pg &
           sleep 5
 
       - name: Run Full Evaluation
         env:
           GOOGLE_CLOUD_PROJECT: ${{ secrets.GOOGLE_CLOUD_PROJECT }}
-          GOOGLE_CLOUD_LOCATION: europe-west4
+          GOOGLE_CLOUD_LOCATION: europe-west2
           PG_CONNECTION_STRING: ${{ secrets.PG_CONNECTION_STRING }}
           LANGFUSE_PUBLIC_KEY: ${{ secrets.LANGFUSE_PUBLIC_KEY }}
           LANGFUSE_SECRET_KEY: ${{ secrets.LANGFUSE_SECRET_KEY }}
