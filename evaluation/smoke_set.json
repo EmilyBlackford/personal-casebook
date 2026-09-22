@@ -1,0 +1,37 @@
+[
+    {
+        "question": "What three categories do general-purpose AI risks fall into?",
+        "ground_truth": "General-purpose AI risks fall into three categories: malicious use, malfunctions, and systemic risks.",
+        "source_docs": [
+            "uk-aisi-report.txt"
+        ]
+    },
+        {
+        "question": "What is risk identification?",
+        "ground_truth": "Risk identification is the process of finding, recognising, and describing risks. Comprehensive risk identification typically encompasses capability-drive assessment, which test whether models possess specific dangerous capabilities, as well as risk modelling and forecasting, which are used to explore existing and emerging risks.",
+        "source_docs": [
+            "uk-aisi-report.txt"
+        ]
+    },
+    {
+        "question": "What are the four risk categories identified by the EU AI Act's risk-based approach?",
+        "ground_truth": " The Act identifies four risk categories: unacceptable risk (prohibited), high risk (heavily regulated), limited risk (transparency obligations), and minimal risk (largely unregulated).",
+        "source_docs": [
+            "meridian-ai-governance-report.txt"
+        ]
+    },
+        {
+        "question": "What are the four functions that make up the AI RMF Core?",
+        "ground_truth": "The Core is composed of four functions: GOVERN, MAP, MEASURE, and MANAGE. Each of these high-level functions is broken down into categories and subcategories.",
+        "source_docs": [
+            "nist-ai-rmf.txt"
+        ]
+    },
+        {
+        "question": "What are the three major categories of AI bias identified by NIST?",
+        "ground_truth": "NIST has identified three major categories of AI bias to be considered and managed: systemic, computational and statistical, and human-cognitive.",
+        "source_docs": [
+            "nist-ai-rmf.txt"
+        ]
+    }
+]

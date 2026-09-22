@@ -1,0 +1,22 @@
+# Combined dependencies for all Week 11 labs. Install what each day's
+# README asks for, or install everything here up front.
+#
+# Pinned to the Week 10 verified set. ragas 0.4.3 holds langchain on 0.3.x,
+# so langgraph stays <1.0. pydantic v2 is required by with_structured_output.
+langchain==0.3.30
+langchain-core==0.3.86
+langchain-community==0.3.31
+langchain-text-splitters==0.3.11
+langchain-google-vertexai==2.1.2
+langchain-postgres==0.0.17
+psycopg[binary]==3.3.4
+pgvector==0.3.6
+langgraph==0.6.11
+langfuse==4.12.0
+ragas==0.4.3
+datasets==5.0.0
+google-cloud-aiplatform==1.159.0
+tenacity==9.1.2
+pydantic==2.12.3
+pytest==9.1.1
+numpy

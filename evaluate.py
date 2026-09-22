@@ -16,6 +16,8 @@
 # context_recall: 0.400
 # Date: 10/09/26
 
+iimport sys
+import argparse
 import json
 from pathlib import Path
 from datasets import Dataset
@@ -24,10 +26,9 @@ from ragas.metrics import faithfulness, answer_relevancy, context_precision, con
 
 from pipeline import ask, load_vector_store
 from evaluation.ragas_config import get_ragas_llm, get_ragas_embeddings
+
 from graph_agent import ask_agent, extract_contexts_from_messages
 
-DATASET_PATH = Path("evaluation/golden_dataset.json")
-OUTPUT_PATH  = Path("evaluation/pipeline_outputs.json")
 
 def run_with_agent(sample):
     result = ask_agent(sample["question"])
@@ -36,37 +37,28 @@ def run_with_agent(sample):
         "contexts": extract_contexts_from_messages(result["messages"])
     }
 
-def collect_outputs(vector_store) -> list[dict]:
-    """Run every question in the golden dataset through the pipeline.
 
-    Read DATASET_PATH. For each item, call ask() and collect the result.
-    Write a list of dicts to OUTPUT_PATH. Each dict must have:
-        "question":     str
-        "ground_truth": str  (copied from the golden dataset)
-        "answer":       str  (from the pipeline)
-        "contexts":     list[str]  (from the pipeline)
+def collect_outputs(dataset_path: Path, output_path: Path, vector_store) -> list[dict]:
+    """Run every question in the given dataset through the pipeline.
+
+    Read dataset_path. For each item, call ask() and collect the result.
+    Write a list of dicts to output_path. Each dict must have:
+      "question":     str
+      "ground_truth": str  (copied from the dataset)
+      "answer":       str  (from the pipeline)
+      "contexts":     list[str]  (from the pipeline)
 
     Print progress as you go.
     Returns the list of output dicts.
     """
-    with open(DATASET_PATH) as f:
-        golden_dataset = json.load(f)
+    with dataset_path.open(encoding="utf-8") as f:
+        golden = json.load(f)
 
     outputs = []
-    total = len(golden_dataset)
-
-    for i, item in enumerate(golden_dataset, start=1):
+    for i, item in enumerate(golden, start=1):
         question = item["question"]
-        print(f"[{i}/{total}] Asking: {question}")
+        print(f"[{i}/{len(golden)}] {question}")
 
-        # result = ask(question, vector_store)
-
-        # outputs.append({
-        #     "question": question,
-        #     "ground_truth": item["ground_truth"],
-        #     "answer": result["answer"],
-        #     "contexts": result["contexts"],
-        # })
         agent_result = run_with_agent(item)
 
         outputs.append({
@@ -76,15 +68,24 @@ def collect_outputs(vector_store) -> list[dict]:
             "contexts": agent_result["contexts"]
         })
 
-    OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with open(OUTPUT_PATH, "w") as f:
-        json.dump(outputs, f, indent=2)
+        # result = ask(question, vector_store, use_rewriting=USE_REWRITING)
+        #
+        # outputs.append({
+        #     "question":     question,
+        #     "ground_truth": item["ground_truth"],
+        #     "answer":       result["answer"],
+        #     "contexts":     result["contexts"],
+        # })
 
-    print(f"Wrote {len(outputs)} outputs to {OUTPUT_PATH}")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with output_path.open("w", encoding="utf-8") as f:
+        json.dump(outputs, f, indent=2, ensure_ascii=False)
+    print(f"Wrote {len(outputs)} outputs to {output_path}")
+
     return outputs
-    
 
-def run_ragas(outputs: list[dict]) -> None:
+
+def run_ragas(outputs: list[dict]):
     """Score the collected outputs with RAGAS (given, no changes needed).
 
     Builds a HuggingFace Dataset from outputs and calls ragas.evaluate() with
@@ -107,9 +108,40 @@ def run_ragas(outputs: list[dict]) -> None:
     print(result)
     result.to_pandas().to_csv("evaluation/ragas_results.csv", index=False)
     print("Per-query results saved to evaluation/ragas_results.csv")
+    return result
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--ci", action="store_true", help="Write results to evaluation_results.json")
+    parser.add_argument("--dataset", default="evaluation/golden_dataset.json", help="Path to the question set to evaluate")
+    args = parser.parse_args()
+
+    dataset_path = Path(args.dataset)
+    output_path = Path("evaluation/pipeline_outputs.json")
+
+    vector_store = load_vector_store()
+    outputs = collect_outputs(dataset_path, output_path, vector_store)
+    result = run_ragas(outputs)
+
+    # In Week 9 your harness produced a RAGAS result object; you convert it with
+    # result.to_pandas() to write the CSV. Take the per-metric means from that DataFrame:
+    df = result.to_pandas()
+    results = {
+        "faithfulness": float(df["faithfulness"].mean()),
+        "answer_relevancy": float(df["answer_relevancy"].mean()),
+        "context_precision": float(df["context_precision"].mean()),
+        "context_recall": float(df["context_recall"].mean()),
+    }
+
+    if args.ci:
+        with open("evaluation_results.json", "w") as f:
+            json.dump(results, f, indent=2)
+        print("Results written to evaluation_results.json")
+    else:
+        for metric, score in results.items():
+            print(f"{metric}: {score:.3f}")
 
 
 if __name__ == "__main__":
-    vector_store = load_vector_store()
-    outputs = collect_outputs(vector_store)
-    run_ragas(outputs)
+    main()
